@@ -20,7 +20,7 @@ module.exports.run = async function ({ api, event, enableCommands, args }) {
     helpMessage += '│ あanistatus あanigif\n│ あanipic あanime\n╰─────────ꔪ\n';
 
     helpMessage += '╭─╮\n│『 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥 』\n';
-    helpMessage += '│⊙autolink\n╰─────────ꔪ\n';
+    helpMessage += '│⊙alldl(commingsoon)\n╰─────────ꔪ\n';
 
     helpMessage += '╭─╮\n│『 𝗧𝗢𝗢𝗟𝗦 』\n';
     helpMessage += '│☭pin ☭shell\n│☭v2a ☭stalk\n│☭uptime ☭clean\n│☭getlink ☭rembg\n╰─────────ꔪ\n';
