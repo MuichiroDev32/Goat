@@ -50,14 +50,6 @@ module.exports.run = async function ({ api, event, enableCommands, args }) {
     helpMessage += '├───────────⭓\n│';
 
    
-    for (let i = 0; i < commands.length; i++) {
-      helpMessage += `\n\t${i + 1}. ${commands[i]}`;
-    }
-
-    for (let j = 0; j < eventCommands.length; j++) {
-      helpMessage += `\n\tEvent ${j + 1}. ${eventCommands[j]}`;
-    }
-
     api.sendMessage(helpMessage, event.threadID, event.messageID);
   } catch (error) {
     console.log(error);
