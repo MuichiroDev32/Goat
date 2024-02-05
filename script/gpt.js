@@ -54,7 +54,7 @@ module.exports = {
 
         const audioPath = path.resolve(__dirname, 'cache', `${uid}_draw_response.mp3`);
 
-        await this.downloadFile(baseURL, audioPath);
+        await module.exports.downloadFile(baseURL, audioPath);
 
         const att = fs.createReadStream(audioPath);
 
@@ -65,7 +65,7 @@ module.exports = {
 
         fs.unlinkSync(audioPath); // Delete the downloaded file after sending
       } else {
-        const result = await this.makeApiRequest(encodedPrompt, uid, a);
+        const result = await module.exports.makeApiRequest(encodedPrompt, uid, a);
 
         api.sendMessage({
           body: `${result}`,
