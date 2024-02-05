@@ -1,26 +1,28 @@
-module.exports.config = {
-  name: "fun",
-  version: "1.0.0",
-  hasPermssion: 0,
-  credits: "S0H4G x Kshitiz",
-  description: "lyrical video",
-  commandCategory: "Hình ảnh",
-  usages: "lyricalvideo",
-  cooldowns: 5,
-  dependencies: {
-    "request":"",
-    "fs-extra":"",
-    "axios":""
-  }
-};
-
-module.exports.run = async({api,event,args,client,Users,Threads,__GLOBAL,Currencies}) => {
 const axios = require('axios');
-const request = global.nodemodule["request"];
-const fs = global.nodemodule["fs-extra"];
-   var hi = ["ENJOY..🤍"];
-  var know = hi[Math.floor(Math.random() * hi.length)];
-  var link = [
+
+module.exports = {
+  config: {
+    name: "fun",
+    version: "2.0",
+    author: "kshitiz",
+    countDown: 20,
+    role: 0,
+    shortDescription: "",
+    longDescription: "bot will send you random science meme to entertain you",
+    category: "𝗠𝗘𝗠𝗘",
+    guide: "{p}smeme",
+  },
+
+  sentMemes: [],
+
+  run: async function ({ api, event, message }) {
+    const senderID = event.senderID;
+
+    const loadingMessage = await api.sendMessage({
+      body: "Loading science meme...",
+    }, event.threadID);
+
+    const driveLinks = [
          "https://drive.google.com/uc?export=download&id=1u0PqzyCmSzXvj5UwAlfHJp3RcM6HluSH",
       "https://drive.google.com/uc?export=download&id=17_0X0NWjLu-Grf8N9mfeY4e6np0eBK3F",
       "https://drive.google.com/uc?export=download&id=1ld9LLIPVt_oMnK-cX8qxSrOFCqA5iEOt",
@@ -343,7 +345,31 @@ const fs = global.nodemodule["fs-extra"];
       "https://drive.google.com/uc?export=download&id=14qlHoK2vUNkZBB0nnykckxcb0BuRX3mh",
     ];
 
-    
- var callback = () => api.sendMessage({body:`「 ${know} 」`,attachment: fs.createReadStream(__dirname + "/cache/15.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/15.mp4"));    
-      return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/15.mp4")).on("close",() => callback());
-   };
+ const randomIndex = Math.floor(Math.random() * driveLinks.length);
+    const randomDriveLink = driveLinks[randomIndex];
+
+    if (senderID !== null) {
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: randomDriveLink,
+          responseType: 'stream',
+        });
+
+        await api.sendMessage({
+          body: 'random video',
+          attachment: response.data,
+        }, event.threadID);
+
+        setTimeout(() => {
+          api.unsendMessage(loadingMessage.messageID);
+        }, 10000);
+      } catch (error) {
+        console.error('Error downloading meme:', error);
+        await api.sendMessage({
+          body: 'Error downloading the meme. Please try again later.',
+        }, event.threadID);
+      }
+    }
+  },
+};
