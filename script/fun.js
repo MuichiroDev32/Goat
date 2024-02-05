@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "lyricalvideo",
+  name: "fun",
   version: "1.0.0",
   hasPermssion: 0,
   credits: "S0H4G x Kshitiz",
