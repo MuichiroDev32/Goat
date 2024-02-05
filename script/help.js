@@ -23,7 +23,7 @@ module.exports.run = async function ({ api, event, enableCommands, args }) {
     helpMessage += '│⊙alldl(commingsoon)\n╰─────────ꔪ\n';
 
     helpMessage += '╭─╮\n│『 𝗧𝗢𝗢𝗟𝗦 』\n';
-    helpMessage += '│☭pin ☭shell\n│☭clean\n│☭getlink ☭rembg\n╰─────────ꔪ\n';
+    helpMessage += '│☭pin ☭shell\n│☭clean ☭getlink \n╰─────────ꔪ\n';
 
     helpMessage += '╭─╮\n│『 𝗘𝗡𝗧𝗘𝗥𝗧𝗔𝗜𝗡𝗠𝗘𝗡𝗧 』\n';
     helpMessage += '│♡fun ♡sciencememe\n│♡say ♡sad\n│♡lyricalvideo ♡fun2\n│♡tik ♡tiktok\n│♡insta ♡reels\n╰──────────ꔪ\n';
