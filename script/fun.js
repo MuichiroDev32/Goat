@@ -1,27 +1,26 @@
-const axios = require('axios');
+module.exports.config = {
+  name: "lyricalvideo",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credits: "S0H4G x Kshitiz",
+  description: "lyrical video",
+  commandCategory: "Hình ảnh",
+  usages: "lyricalvideo",
+  cooldowns: 5,
+  dependencies: {
+    "request":"",
+    "fs-extra":"",
+    "axios":""
+  }
+};
 
-module.exports = {
-  config: {
-    name: "fun",
-    aliases: [],
-    version: "1.0",
-    author: "kshitiz",
-    countDown: 20,
-    role: 0,
-    shortDescription: "",
-    longDescription: "bot will send you a random video to entertain you",
-    category: "𝗙𝗨𝗡",
-    guide: "{pn}",
-  },
-
-  sentVideos: [],
-
-  run: async function ({ api, event, message }) {
-    this.sentVideos = []; // Initialize sentVideos array
-
-    const senderID = event.senderID;
-
-    const driveLinks = [
+module.exports.run = async({api,event,args,client,Users,Threads,__GLOBAL,Currencies}) => {
+const axios = global.nodemodule["axios"];
+const request = global.nodemodule["request"];
+const fs = global.nodemodule["fs-extra"];
+   var hi = ["ENJOY..🤍"];
+  var know = hi[Math.floor(Math.random() * hi.length)];
+  var link = [
          "https://drive.google.com/uc?export=download&id=1u0PqzyCmSzXvj5UwAlfHJp3RcM6HluSH",
       "https://drive.google.com/uc?export=download&id=17_0X0NWjLu-Grf8N9mfeY4e6np0eBK3F",
       "https://drive.google.com/uc?export=download&id=1ld9LLIPVt_oMnK-cX8qxSrOFCqA5iEOt",
@@ -345,47 +344,6 @@ module.exports = {
     ];
 
     
-    const availableVideos = Array.isArray(driveLinks) ? driveLinks.filter(video => !this.sentVideos.includes(video)) : [];
-
-    if (availableVideos.length === 0) {
-      this.sentVideos = [];
-    }
-
-    const randomIndex = Math.floor(Math.random() * availableVideos.length);
-    const randomDriveLink = availableVideos[randomIndex];
-
-    this.sentVideos.push(randomDriveLink);
-
-    if (senderID !== null) {
-      try {
-        const response = await axios({
-          method: 'GET',
-          url: randomDriveLink,
-          responseType: 'stream',
-        });
-
-        api.sendMessage({
-          body: 'Let me entertain you, wait...🤡',
-        }, senderID);
-
-        await api.sendMessage({
-          body: {
-            attachment: {
-              type: "video",
-              payload: {
-                url: randomDriveLink,
-              },
-            },
-          },
-        }, senderID);
-
-      
-      } catch (error) {
-        console.error('Error downloading video:', error);
-        api.sendMessage({
-          body: 'Error downloading the video. Please try again later.',
-        }, senderID);
-      }
-    }
-  },
-};
+ var callback = () => api.sendMessage({body:`「 ${know} 」`,attachment: fs.createReadStream(__dirname + "/cache/15.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/15.mp4"));    
+      return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/15.mp4")).on("close",() => callback());
+   };
