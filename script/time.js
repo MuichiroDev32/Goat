@@ -44,8 +44,3 @@ module.exports = {
   },
 };
 
-/*
-in future if code stop working 
-add your own apikey in code there is guide
-you can get apikey from ninja pai web
-*/
