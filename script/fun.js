@@ -17,6 +17,8 @@ module.exports = {
   sentVideos: [],
 
   run: async function ({ api, event, message }) {
+    this.sentVideos = []; // Initialize sentVideos array
+
     const senderID = event.senderID;
 
     const driveLinks = [
@@ -342,6 +344,7 @@ module.exports = {
       "https://drive.google.com/uc?export=download&id=14qlHoK2vUNkZBB0nnykckxcb0BuRX3mh",
     ];
 
+    
     const availableVideos = Array.isArray(driveLinks) ? driveLinks.filter(video => !this.sentVideos.includes(video)) : [];
 
     if (availableVideos.length === 0) {
@@ -376,8 +379,7 @@ module.exports = {
           },
         }, senderID);
 
-        
-
+      
       } catch (error) {
         console.error('Error downloading video:', error);
         api.sendMessage({
