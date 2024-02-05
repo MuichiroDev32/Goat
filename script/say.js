@@ -52,7 +52,23 @@ module.exports = {
 
       const audioUrl = audioApi.data.audio;
 
-      await global.utils.downloadFile(audioUrl, audioPath);
+      // Simple downloadFile function implementation
+      const downloadFile = async (url, dest) => {
+        const response = await axios({
+          method: 'GET',
+          url: url,
+          responseType: 'stream',
+        });
+
+        response.data.pipe(fs.createWriteStream(dest));
+
+        return new Promise((resolve, reject) => {
+          response.data.on('end', () => resolve());
+          response.data.on('error', (error) => reject(error));
+        });
+      };
+
+      await downloadFile(audioUrl, audioPath);
 
       const att = createReadStream(audioPath);
 
