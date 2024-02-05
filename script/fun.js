@@ -7,7 +7,7 @@ module.exports = {
     countDown: 20,
     role: 0,
     shortDescription: "",
-    longDescription: "bot will send you a random video to entertain you",
+    longDescription: "Bot will send you a random video to entertain you",
     category: "𝗙𝗨𝗡",
     guide: "{pn}",
   },
@@ -18,10 +18,10 @@ module.exports = {
     const senderID = event.senderID;
 
     const loadingMessage = await message.reply({
-      body: "let me entertain you, wait...🤡",
+      body: "Let me entertain you, wait... 🤡",
     });
 
-    const link = [
+    const links = [
          "https://drive.google.com/uc?export=download&id=1u0PqzyCmSzXvj5UwAlfHJp3RcM6HluSH",
       "https://drive.google.com/uc?export=download&id=17_0X0NWjLu-Grf8N9mfeY4e6np0eBK3F",
       "https://drive.google.com/uc?export=download&id=1ld9LLIPVt_oMnK-cX8qxSrOFCqA5iEOt",
@@ -344,26 +344,24 @@ module.exports = {
       "https://drive.google.com/uc?export=download&id=14qlHoK2vUNkZBB0nnykckxcb0BuRX3mh",
     ];
 
-    const availableVideos = link.filter((video) => !this.sentVideos.includes(video));
-
-    if (availableVideos.length === 0) {
+    if (this.sentVideos.length === links.length) {
+      
       this.sentVideos = [];
     }
 
-    const randomIndex = Math.floor(Math.random() * availableVideos.length);
-    const randomVideo = availableVideos[randomIndex];
+   
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * links.length);
+    } while (this.sentVideos.includes(randomIndex));
 
-    this.sentVideos.push(randomVideo);
+    const videoLink = links[randomIndex];
+    this.sentVideos.push(randomIndex); // Mark this video as sent
 
-    if (senderID !== null) {
-      message.reply({
-        body: '𝗲𝗻𝗷𝗼𝘆 𝘁𝗵𝗶𝘀 𝘃𝗶𝗱𝗲𝗼🤡',
-        attachment: await global.utils.getStreamFromURL(randomVideo),
-      });
+  
+    await api.sendMessage({ body: videoLink, mentions: [{ tag: senderID, id: senderID }] }, event.threadID);
 
-      setTimeout(() => {
-        api.unsendMessage(loadingMessage.messageID);
-      }, 10000);
-    }
+   
+    await api.unsendMessage(loadingMessage.messageID);
   },
 };
