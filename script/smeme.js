@@ -8,19 +8,19 @@ module.exports = {
     countDown: 20,
     role: 0,
     shortDescription: "",
-    longDescription: "bot will send you a random science meme to entertain you",
+    longDescription: "bot will send you random science meme to entertain you",
     category: "𝗠𝗘𝗠𝗘",
     guide: "{p}smeme",
   },
 
-  sentVideos: [],
+  sentMemes: [],
 
   run: async function ({ api, event, message }) {
     const senderID = event.senderID;
 
-    const loadingMessage = await message.reply({
+    const loadingMessage = await api.sendMessage({
       body: "Loading science meme...",
-    });
+    }, event.threadID);
 
     const driveLinks = [
       "https://drive.google.com/file/d/1zhvNKGSmwbDYCWwY4o4SxUpzTpzp-9T4/view?usp=drive_link",
@@ -321,20 +321,19 @@ module.exports = {
       "https://drive.google.com/file/d/1-wWQqqvFIE6iVA8LsDxBXbbg0Kvrw1fV/view?usp=drive_link",
     ];
 
-    const availableVideos = driveLinks.filter((video) => !this.sentVideos.includes(video));
+    const availableMemes = driveLinks.filter(meme => !this.sentMemes.includes(meme));
 
-    if (availableVideos.length === 0) {
-      this.sentVideos = [];
+    if (availableMemes.length === 0) {
+      this.sentMemes = [];
     }
 
-    const randomIndex = Math.floor(Math.random() * availableVideos.length);
-    const randomDriveLink = availableVideos[randomIndex];
+    const randomIndex = Math.floor(Math.random() * availableMemes.length);
+    const randomDriveLink = availableMemes[randomIndex];
 
     const fileId = randomDriveLink.match(/\/d\/(.+?)\//)[1];
-
     const downloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
-    this.sentVideos.push(randomDriveLink);
+    this.sentMemes.push(randomDriveLink);
 
     if (senderID !== null) {
       try {
@@ -344,19 +343,19 @@ module.exports = {
           responseType: 'stream',
         });
 
-        message.reply({
+        api.sendMessage({
           body: 'Random science meme',
           attachment: response.data,
-        });
+        }, event.threadID);
 
         setTimeout(() => {
           api.unsendMessage(loadingMessage.messageID);
         }, 10000);
       } catch (error) {
-        console.error('Error downloading video:', error);
-        message.reply({
-          body: 'Error downloading the video. Please try again later.',
-        });
+        console.error('Error downloading meme:', error);
+        api.sendMessage({
+          body: 'Error downloading the meme. Please try again later.',
+        }, event.threadID);
       }
     }
   },
