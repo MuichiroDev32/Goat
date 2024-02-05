@@ -13,7 +13,7 @@ module.exports = {
       en: "{p}{n} questions",
     },
   },
-  async makeApiRequest(encodedPrompt, uid, a) {
+  makeApiRequest: async function(encodedPrompt, uid, a) {
     try {
       const response = await axios.get(`https://sandipapi.onrender.com/gpt2?prompt=${encodedPrompt}&uid=${uid}`);
       return response.data;
@@ -21,7 +21,7 @@ module.exports = {
       throw error;
     }
   },
-  async downloadFile(url, dest) {
+  downloadFile: async function(url, dest) {
     const writer = fs.createWriteStream(dest);
 
     const response = await axios({
@@ -37,14 +37,14 @@ module.exports = {
       writer.on('error', reject);
     });
   },
-  async run({ message, event, args, api }) {
+  run: async function({ message, event, args, api }) {
     try {
       const uid = event.senderID;
       const encodedPrompt = encodeURIComponent(args.join(" "));
       const a = "repl";
 
       if (!encodedPrompt) {
-        return message.reply("Please provide questions");
+        return api.sendMessage("Please provide questions", event.threadID);
       }
 
       if (args[0] === 'draw') {
@@ -58,18 +58,18 @@ module.exports = {
 
         const att = fs.createReadStream(audioPath);
 
-        message.reply({
+        api.sendMessage({
           body: `${args.join(" ")}`,
           attachment: att,
-        });
+        }, event.threadID);
 
         fs.unlinkSync(audioPath); // Delete the downloaded file after sending
       } else {
         const result = await this.makeApiRequest(encodedPrompt, uid, a);
 
-        message.reply({
+        api.sendMessage({
           body: `${result}`,
-        });
+        }, event.threadID);
       }
     } catch (error) {
       console.error("Error:", error.message);
