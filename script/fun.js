@@ -15,7 +15,7 @@ module.exports.config = {
 };
 
 module.exports.run = async({api,event,args,client,Users,Threads,__GLOBAL,Currencies}) => {
-const axios = global.nodemodule["axios"];
+const axios = require('axios');
 const request = global.nodemodule["request"];
 const fs = global.nodemodule["fs-extra"];
    var hi = ["ENJOY..🤍"];
