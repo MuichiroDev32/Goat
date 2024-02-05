@@ -14,7 +14,7 @@ module.exports.run = async function ({ api, event, enableCommands, args }) {
 
   
     helpMessage += '╭─╮\n│『 𝗜𝗡𝗙𝗢 』\n';
-    helpMessage += '│☪︎define  ☪︎history\n│☪︎ping ☪︎time ☪︎stalk\n│☪︎membercount ☪︎nn\n╰───────────ꔪ\n';
+    helpMessage += '│☪︎define  ☪︎history\n│☪︎time ☪︎stalk\n│☪︎nn\n╰───────────ꔪ\n';
 
     helpMessage += '╭─╮\n│『 𝗔𝗡𝗜𝗠𝗘 』\n';
     helpMessage += '│ あanistatus あanigif\n│ あanipic あanime\n╰─────────ꔪ\n';
