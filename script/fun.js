@@ -19,7 +19,7 @@ module.exports = {
     const senderID = event.senderID;
 
     const loadingMessage = await api.sendMessage({
-      body: "Loading science meme...",
+      body: "Loading random video",
     }, event.threadID);
 
     const driveLinks = [
