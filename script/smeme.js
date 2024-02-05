@@ -22,6 +22,10 @@ module.exports = {
       body: "Loading science meme...",
     }, event.threadID);
 
+    if (!Array.isArray(this.sentMemes)) {
+      this.sentMemes = [];
+    }
+
     const driveLinks = [
       "https://drive.google.com/file/d/1zhvNKGSmwbDYCWwY4o4SxUpzTpzp-9T4/view?usp=drive_link",
       "https://drive.google.com/file/d/1zPV1B1fq6OrUGm_0Wa3fWGmPbPWAVi_a/view?usp=drive_link",
@@ -321,7 +325,9 @@ module.exports = {
       "https://drive.google.com/file/d/1-wWQqqvFIE6iVA8LsDxBXbbg0Kvrw1fV/view?usp=drive_link",
     ];
 
-     const availableMemes = Array.isArray(driveLinks) ? driveLinks.filter(meme => !this.sentMemes.includes(meme)) : [];
+      const availableMemes = this.sentMemes.length > 0
+      ? driveLinks.filter(meme => !this.sentMemes.includes(meme))
+      : driveLinks;
 
     if (availableMemes.length === 0) {
       this.sentMemes = [];
