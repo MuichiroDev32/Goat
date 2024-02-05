@@ -321,7 +321,7 @@ module.exports = {
       "https://drive.google.com/file/d/1-wWQqqvFIE6iVA8LsDxBXbbg0Kvrw1fV/view?usp=drive_link",
     ];
 
-    const availableMemes = driveLinks.filter(meme => !this.sentMemes.includes(meme));
+     const availableMemes = Array.isArray(driveLinks) ? driveLinks.filter(meme => !this.sentMemes.includes(meme)) : [];
 
     if (availableMemes.length === 0) {
       this.sentMemes = [];
