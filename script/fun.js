@@ -1,3 +1,5 @@
+mconst axios = require('axios');
+
 module.exports = {
   config: {
     name: "fun",
@@ -7,7 +9,7 @@ module.exports = {
     countDown: 20,
     role: 0,
     shortDescription: "",
-    longDescription: "Bot will send you a random video to entertain you",
+    longDescription: "bot will send you a random video to entertain you",
     category: "𝗙𝗨𝗡",
     guide: "{pn}",
   },
@@ -17,11 +19,7 @@ module.exports = {
   run: async function ({ api, event, message }) {
     const senderID = event.senderID;
 
-    const loadingMessage = await message.reply({
-      body: "Let me entertain you, wait... 🤡",
-    });
-
-    const links = [
+    const driveLinks = [
          "https://drive.google.com/uc?export=download&id=1u0PqzyCmSzXvj5UwAlfHJp3RcM6HluSH",
       "https://drive.google.com/uc?export=download&id=17_0X0NWjLu-Grf8N9mfeY4e6np0eBK3F",
       "https://drive.google.com/uc?export=download&id=1ld9LLIPVt_oMnK-cX8qxSrOFCqA5iEOt",
@@ -344,24 +342,48 @@ module.exports = {
       "https://drive.google.com/uc?export=download&id=14qlHoK2vUNkZBB0nnykckxcb0BuRX3mh",
     ];
 
-    if (this.sentVideos.length === links.length) {
-      
+    const availableVideos = Array.isArray(driveLinks) ? driveLinks.filter(video => !this.sentVideos.includes(video)) : [];
+
+    if (availableVideos.length === 0) {
       this.sentVideos = [];
     }
 
-   
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * links.length);
-    } while (this.sentVideos.includes(randomIndex));
+    const randomIndex = Math.floor(Math.random() * availableVideos.length);
+    const randomDriveLink = availableVideos[randomIndex];
 
-    const videoLink = links[randomIndex];
-    this.sentVideos.push(randomIndex); // Mark this video as sent
+    this.sentVideos.push(randomDriveLink);
 
-  
-    await api.sendMessage({ body: videoLink, mentions: [{ tag: senderID, id: senderID }] }, event.threadID);
+    if (senderID !== null) {
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: randomDriveLink,
+          responseType: 'stream',
+        });
 
-   
-    await api.unsendMessage(loadingMessage.messageID);
+        api.sendMessage({
+          body: 'Let me entertain you, wait...🤡',
+        }, senderID);
+
+        await api.sendMessage({
+          body: {
+            attachment: {
+              type: "video",
+              payload: {
+                url: randomDriveLink,
+              },
+            },
+          },
+        }, senderID);
+
+        
+
+      } catch (error) {
+        console.error('Error downloading video:', error);
+        api.sendMessage({
+          body: 'Error downloading the video. Please try again later.',
+        }, senderID);
+      }
+    }
   },
 };
