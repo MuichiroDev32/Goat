@@ -65,7 +65,7 @@ const pages = {
 
 module.exports = {
   config: {
-    name: "run",
+    name: "page",
     version: "1.0",
     author: "kshitiz",
     countDown: 5,
