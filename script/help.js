@@ -47,7 +47,7 @@ module.exports.run = async function ({ api, event, enableCommands, args }) {
     helpMessage += '│⁜gojo\n│⁜zoro\n│⁜randi\n│⁜carolina\n│⁜luffy\n│⁜kshitiz\n╰────────ꔪ\n';
 
     helpMessage += '╔═══════════╗\n        𝗚𝗼𝗮𝘁𝗕𝗼𝘁🤍🪽\n╚═══════════╝\n';
-    helpMessage += '├───────────⭓\n│';
+    helpMessage += '├───────────⭓\n';
 
    
     api.sendMessage(helpMessage, event.threadID, event.messageID);
