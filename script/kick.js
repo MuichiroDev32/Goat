@@ -4,7 +4,7 @@ module.exports = {
     version: "1.2",
     author: "NTKhang",
     countDown: 5,
-    role: 1,
+    role: 2,
     shortDescription: "Kick member",
     longDescription: "Kick member out of chat box",
     category: "box chat",
