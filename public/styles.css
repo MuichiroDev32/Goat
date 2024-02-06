@@ -48,3 +48,24 @@ body {
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.5);
     }
 }
+
+/* Add this CSS to style the command buttons */
+.command-btn {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    color: white;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.command-btn:hover {
+    background-color: #0056b3;
+}
+
+.command-btn.selected {
+    background-color: #ffffff;
+    color: transparent; /* Hide button text */
+}
