@@ -50,7 +50,7 @@ body {
 }
 
 /* Add this CSS to style the command buttons */
-.command-btn {
+.cmd-btn {
     background-color: #007bff;
     border: 1px solid #007bff;
     color: white;
@@ -58,14 +58,38 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Added border-color transition */
+    position: relative; /* Added position relative for pseudo-element positioning */
 }
 
-.command-btn:hover {
+.cmd-btn:hover {
     background-color: #0056b3;
 }
 
-.command-btn.selected {
+.cmd-btn.selected {
     background-color: #ffffff;
     color: transparent; /* Hide button text */
+}
+
+/* Add glowing border */
+.cmd-btn::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* white semi-transparent border */
+    border-radius: 5px;
+    pointer-events: none;
+    animation: glowing-border 1500ms infinite alternate;
+}
+
+@keyframes glowing-border {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
 }
