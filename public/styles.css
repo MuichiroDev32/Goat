@@ -71,23 +71,24 @@ body {
     color: transparent; /* Hide button text */
 }
 
-/* Add glowing border */
-.cmd-btn::before {
+/* Add glowing text */
+.cmd-btn::after {
     content: '';
     position: absolute;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
     top: -5px;
     left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border: 1px solid rgba(255, 255, 255, 0.5); /* white semi-transparent border */
     border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3); /* semi-transparent white glow */
     pointer-events: none;
-    animation: glowing-border 1500ms infinite alternate;
+    z-index: -1; /* Place behind the button */
+    animation: glowing-text 1500ms infinite alternate; /* glowing animation */
 }
 
-@keyframes glowing-border {
+@keyframes glowing-text {
     from {
-        opacity: 0.5;
+        opacity: 0.3;
     }
     to {
         opacity: 1;
