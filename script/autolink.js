@@ -29,14 +29,15 @@ module.exports = {
       api.sendMessage("AutoLink is active.", event.threadID, event.messageID);
     }
   },
-  handleEvent: async ({ api, event }) => {
-  if (module.exports.checkLink(event.body)) {
+ handleEvent: async function ({ api, event }) {
+  if (event.body && event.body.trim().length > 0 && module.exports.checkLink(event.body)) {
     const { url } = module.exports.checkLink(event.body);
     console.log(`Attempting to download from URL: ${url}`);
     module.exports.downLoad(url, api, event);
     api.setMessageReaction("💐", event.messageID, (err) => {}, true);
   }
 },
+
 
   downLoad: function (url, api, event) {
     const time = Date.now();
