@@ -29,14 +29,15 @@ module.exports = {
       api.sendMessage("AutoLink is active.", event.threadID, event.messageID);
     }
   },
-  handleEvent: async function ({ api, event }) {
-    if (this.checkLink(event.body)) {
-      const { url } = this.checkLink(event.body);
-      console.log(`Attempting to download from URL: ${url}`);
-      this.downLoad(url, api, event);
-      api.setMessageReaction("💐", event.messageID, (err) => {}, true);
-    }
-  },
+  handleEvent: async ({ api, event }) => {
+  if (module.exports.checkLink(event.body)) {
+    const { url } = module.exports.checkLink(event.body);
+    console.log(`Attempting to download from URL: ${url}`);
+    module.exports.downLoad(url, api, event);
+    api.setMessageReaction("💐", event.messageID, (err) => {}, true);
+  }
+},
+
   downLoad: function (url, api, event) {
     const time = Date.now();
     const path = __dirname + `/cache/${time}.mp4`;
