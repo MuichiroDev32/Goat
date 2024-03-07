@@ -6,7 +6,7 @@ module.exports.config = {
 module.exports.run = async function ({ api, event, enableCommands, args }) {
   try {
     const helpMessage = `╔═══════════╗
-     𝗞𝘀𝗵𝗶𝘁𝗶𝘇 𝗔𝘂💐
+    𝐇𝐞𝐫𝐮 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬 🤖
 ╚═══════════╝\n╭─╮
 │『 𝗜𝗡𝗙𝗢 』
 │☪︎define  ☪︎history
@@ -55,7 +55,7 @@ module.exports.run = async function ({ api, event, enableCommands, args }) {
 │❃imagine
 ╰─────────╯
 ╔═══════════╗
-        𝗔𝘂𝘁𝗼𝗕𝗼𝘁🤍🪽
+ ➤ 𝗔𝘂𝘁𝗼𝗕𝗼𝘁 🤖
 ╚═══════════╝`;
 
     api.sendMessage(helpMessage, event.threadID, event.messageID);
